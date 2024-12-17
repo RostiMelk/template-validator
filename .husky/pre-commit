@@ -1,13 +1,15 @@
 #!/bin/sh
 
-# Check if on main branch
-branch=$(git rev-parse --abbrev-ref HEAD)
-
-if [ "$branch" = "main" ]; then
-    # Check if the dist directory is staged for commit
+# Check if we're on a tag
+if git describe --exact-match --tags HEAD >/dev/null 2>&1; then
+    # We are on a tag, allow dist directory
+    exit 0
+else
+    # We are not on a tag, check if dist is being committed
     if git diff --cached --name-only | grep -q "^dist/"; then
-        echo "Error: 'dist' directory should not be committed to the main branch."
+        echo "Error: 'dist' directory should only be committed on tags."
         echo "Delete the dist directory and try committing again."
+        echo "dist directory should only be committed when creating a release tag."
         exit 1
     fi
 fi
