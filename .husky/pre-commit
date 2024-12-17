@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Check if on main branch
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch" = "main" ]; then
+    # Check if the dist directory is staged for commit
+    if git diff --cached --name-only | grep -q "^dist/"; then
+        echo "Error: 'dist' directory should not be committed to the main branch."
+        echo "Delete the dist directory and try committing again."
+        exit 1
+    fi
+fi
