@@ -20,10 +20,12 @@ jobs:
           node-version: 20
       - name: install dev dependencies
         run: npm i -g typescript husky @vercel/ncc
+      - name: Install package dependency
+        run: npm install @sanity/pkg-utils
       - uses: joshjohanning/publish-github-action@v1.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          npm_package_command: npm install @sanity/pkg-utils && npm run package
+          npm_package_command: npm run package
           commit_node_modules: false
           publish_minor_version: true
           publish_release_branch: true
