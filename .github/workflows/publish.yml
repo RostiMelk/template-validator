@@ -18,12 +18,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: pnpm/action-setup@v3
+        with:
+          version: latest
       - name: install dev dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - uses: joshjohanning/publish-github-action@v1.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          npm_package_command: npm run package
+          npm_package_command: pnpm run package
           commit_node_modules: false
           publish_minor_version: true
           publish_release_branch: true
