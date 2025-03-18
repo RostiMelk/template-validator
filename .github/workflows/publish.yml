@@ -21,7 +21,7 @@ jobs:
       - name: install dev dependencies
         run: npm i -g typescript husky @vercel/ncc
       - name: Install package dependency
-        run: npm install @sanity/pkg-utils
+        run: npm install @sanity/pkg-utils --include=dev
       - uses: joshjohanning/publish-github-action@v1.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
